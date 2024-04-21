@@ -4,7 +4,6 @@ Gem::Specification.new do |s|
   s.date        = '2024-04-20'
   s.summary     = "statistical hypothesis verification!"
   s.description = "integration module of num4tststatistic and num4hypothtst"
-  s.platform      = 'java'
   s.authors     = ["siranovel"]
   s.email       = "siranovel@gmail.com"
   s.homepage    = "http://github.com/siranovel/num4tststatistic2"
