@@ -10,7 +10,7 @@ num4tststatistic2
 ## VS. ##
 
 ## Requirement ##
-num4tststatisticライブラリ
+num4tststatisticライブラリ  
 num4hypothtstライブラリ
 
 ## Usage ##
