@@ -15,7 +15,7 @@ jobs:
     - name: Set up JRuby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: jruby
+        ruby-version: 3.1.1
     - run: bundle install
     - run: gem install rspec
     - name: test
