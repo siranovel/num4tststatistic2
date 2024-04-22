@@ -19,8 +19,6 @@ jobs:
     - run: gem install rspec
     - run: gem install rake-compiler
     - run: bundle install
-    - run: gem install num4tststatistic
-    - run: gem install num4hypothtst
     - name: test
       run: |
         gem build *.gemspec
