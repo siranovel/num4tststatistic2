@@ -16,13 +16,12 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: jruby
-    - run: bundle install
     - run: gem install rspec
-    - run: gem install rake-compiler
+    
     - name: test
       run: |
         gem build *.gemspec
-        # gem install num4tststatistic2
+        gem install num4tststatistic2
         rspec sample/samplez.rb
   deploy:
     name: Publish
