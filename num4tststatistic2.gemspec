@@ -10,6 +10,6 @@ Gem::Specification.new do |s|
   s.license     = "MIT"
   s.files       = ["LICENSE", "Gemfile", "CHANGELOG.md"]
   s.files       += Dir.glob("{lib,ext}/**/*")
-  s.add_runtime_dependency 'num4tststatistic', '~> 0.2', '>= 0.2.2'
-  s.add_runtime_dependency 'num4hypothtst', '~> 0.1', '>= 0.1.1'
+  s.add_development_dependency 'num4tststatistic', '~> 0.2', '>= 0.2.2'
+  s.add_development_dependency 'num4hypothtst', '~> 0.1', '>= 0.1.1'
 end
