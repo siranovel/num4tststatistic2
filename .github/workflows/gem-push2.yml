@@ -21,9 +21,7 @@ jobs:
     - name: test
       run: |
         gem build *.gemspec
-        gem install development  --platform java
-        gem install num4hypothtst --platform java
-        gem install *.gem
+        gem install num4tststatistic2
         rspec sample/samplez.rb
   deploy:
     name: Publish
