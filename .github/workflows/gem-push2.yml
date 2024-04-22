@@ -21,7 +21,7 @@ jobs:
     - name: test
       run: |
         gem build *.gemspec
-        bundle install num4tststatistic2
+        bundle install
         # gem install num4tststatistic2
         rspec sample/samplez.rb
   deploy:
