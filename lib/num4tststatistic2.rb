@@ -16,12 +16,14 @@ module Num4TstStatistic2Lib
         #   @param  [double] a  有意水準
         #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
         # @example
-        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
         #   xi = [15.5, 15.7, 15.4, 15.4, 15.6, 15.4, 15.6, 15.5, 15.4]
-        #   paraTest = Num4TstStatisticLib::ParametrixTestLib.new(hypothTest)
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
+        #   paraTest = Num4TstStatistic2Lib::ParametrixTestLib.new(hypothTest)
         #   paraTest.populationMean(xi, 15.4, 0.05)
         #   => true
         def populationMean(xi, m0, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             df = xi.size - 1
             statistic = @paraTest.populationMean(xi, m0)
             return @hypothTest3.tDistTest(statistic, df, a)
@@ -41,11 +43,13 @@ module Num4TstStatistic2Lib
         #   paraTest.populationVar(xi, sd*sd, 0.05)
         #   => true
         def populationVar(xi, sig0, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             df = xi.size - 1
             statistic = @paraTest.populationVar(xi, sig0)
             return @hypothTest3.chi2DistTest(statistic, df, a)
         end
-        # 母比率の検定量
+        # 母比率の検定
         #
         # @overload populationRatio(m, n, p0, a)
         #   @param [int]     m m値
@@ -59,11 +63,12 @@ module Num4TstStatistic2Lib
         #   paraTest.populationRatio(29, 346, 0.12, 0.05)
         #   => true
         def populationRatio(m, n, p0, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             statistic = @paraTest.populationRatio(m, n, p0)
             return @hypothTest3.normDistTest(statistic, a)
         end
-        # 2つの母平均の差の検定量
-        # (等分散性を仮定)
+        # 2つの母平均の差の検定(等分散性を仮定)
         #
         # @overload diffPopulationMean2EquVar(xi1, xi2, a)
         #   @param [Array] xi1 x1のデータ(double[])
@@ -78,14 +83,15 @@ module Num4TstStatistic2Lib
         #   paraTest.diffPopulationMean2EquVar(xi1, xi2, 0.05)
         #   => false
         def diffPopulationMean2EquVar(xi1, xi2, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             n1 = xi1.size
             n2 = xi2.size
             df = n1 + n2 - 2
             statistic = @paraTest.diffPopulationMean2EquVar(xi1, xi2)
             return @hypothTest3.tDistTest(statistic, df, a)
         end
-        # 2つの母平均の差の検定量
-        # (不等分散性を仮定)
+        # 2つの母平均の差の検定(不等分散性を仮定)
         #
         # @overload diffPopulationMean2UnEquVar(xi1, xi2, a)
         #   @param [Array] xi1 x1のデータ(double[])
@@ -100,6 +106,8 @@ module Num4TstStatistic2Lib
         #   paraTest.diffPopulationMean2UnEquVar(xi1, xi2, 0.05)
         #   => false
         def diffPopulationMean2UnEquVar(xi1, xi2, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             df = @paraTest.df4welch(xi1, xi2)
             statistic = @paraTest.diffPopulationMean2UnEquVar(xi1, xi2)
             return @hypothTest3.tDistTest(statistic, df, a)
@@ -119,12 +127,14 @@ module Num4TstStatistic2Lib
         #   paraTest.diffPopulationMean(xi1, xi2, 0.05)
         #   => true
         def diffPopulationMean(xi1, xi2, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             n = xi1.size
             df = n - 1
             statistic = @paraTest.diffPopulationMean(xi1, xi2)
             return @hypothTest3.tDistTest(statistic, df, a)
         end
-        # 2つの母分散の差の検定量
+        # 2つの母分散の差の検定
         #
         # @overload diffPopulationVar(xi1, xi2, a)
         #   @param [Array] xi1 x1のデータ(double[])
@@ -139,12 +149,14 @@ module Num4TstStatistic2Lib
         #   paraTest.diffPopulationVar(xi1, xi2, 0.05)
         #   => false
         def diffPopulationVar(xi1, xi2, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             nf = xi1.size - 1
             df = xi2.size - 1
             statistic = @paraTest.diffPopulationVar(xi1, xi2)
             return @hypothTest3.fDistTest(statistic, nf, df, a)
         end
-        # 2つの母比率の差の検定量
+        # 2つの母比率の差の検定
         #
         # @overload diffPopulationRatio(m1, n1, m2, n2, a)
         #   @param [int] m1 m1値
@@ -159,10 +171,12 @@ module Num4TstStatistic2Lib
         #   paraTest.diffPopulationRatio(469, 1200, 308, 900, 0.05)
         #   => true
         def diffPopulationRatio(m1, n1, m2, n2, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             statistic = @paraTest.diffPopulationRatio(m1, n1, m2, n2)
             return @hypothTest3.normDistTest(statistic, a)
         end
-        # 適合度の検定量
+        # 適合度の検定
         #
         # @overload fidelity(fi, pi, a)
         #   @param [Array] fi 実測度数(double[])
@@ -177,11 +191,13 @@ module Num4TstStatistic2Lib
         #   paraTest.fidelity(fi, pi, 0.05)
         #   => false
         def fidelity(fi, pi, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             df = fi.size - 1
             statistic = @paraTest.fidelity(fi, pi)
             return @hypothTest3.chi2DistTest(statistic, df, a)
         end
-        # 独立性の検定量
+        # 独立性の検定
         #
         # @overload independency(fij, a)
         #   @param [Array] fij 実測度数(double[][])
@@ -197,6 +213,8 @@ module Num4TstStatistic2Lib
         #   paraTest.independency(fij, 0.05)
         #   => true
         def independency(fij, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             m = fij.size
             n = fij[0].size
             df = (m - 1) * (n - 1)
@@ -217,13 +235,15 @@ module Num4TstStatistic2Lib
         #   @param  [double] a  有意水準
         #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
         # @example
-        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
         #   x = [165, 130, 182, 178, 194, 206, 160, 122, 212, 165, 247, 195]
         #   y = [180, 180, 235, 270, 240, 285, 164, 152]
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
         #   nonParaTest = Num4TstStatistic2Lib::NonParametrixTestLib.new(hypothTest)
         #   nonParaTest.utest(x, y, 0.05)
         #   => true
         def utest(x, y, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             statistic = @nonParaTest.utest(x, y)
             return @hypothTest3.normDistTest(statistic, a)
         end
@@ -235,13 +255,15 @@ module Num4TstStatistic2Lib
         #   @param  [double] a  有意水準
         #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
         # @example
-        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
         #   x = [37.1, 36.2, 36.6, 37.4, 36.8, 36.7, 36.9, 37.4, 36.6, 36.7]
         #   y = [36.8, 36.6, 36.5, 37.0, 36.0, 36.5, 36.6, 37.1, 36.4, 36.7]
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
         #   nonParaTest = Num4TstStatistic2Lib::NonParametrixTestLib.new(hypothTest)
         #   nonParaTest.wilcoxon(x, y, 0.05)
         #   => true
         def wilcoxon(x, y, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             statistic = @nonParaTest.wilcoxon(x, y)
             return @hypothTest3.normDistTest(statistic, a)
         end
@@ -253,13 +275,15 @@ module Num4TstStatistic2Lib
         #   @param [double] a         有意水準
         #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
         # @example
-        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
         #   xi1 = [165, 130, 182, 178, 194, 206, 160, 122, 212, 165, 247, 195]
         #   xi2 = [180, 180, 235, 270, 240, 285, 164, 152]
-        #   nonParaTest = Num4TstStatisticLib::NonParametrixTestLib.new(hypothTest)
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
+        #   nonParaTest = Num4TstStatistic2Lib::NonParametrixTestLib.new(hypothTest)
         #   nonParaTest.ks2test(xi1, xi2, 0.05)
         #   => false
         def ks2test(xi1, xi2, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+
             return @nonParaTest.ks2test(xi1, xi2, a)
         end
     end
@@ -268,7 +292,7 @@ module Num4TstStatistic2Lib
             @outlier = Num4TstStatisticLib::OutlierLib.new
             @hypothTest2 = Num4HypothTestLib::GrubbsTestLib.new
         end
-        # グラプス・スミルノフの外れ値の検定量
+        # グラプス・スミルノフの外れ値の検定
         #
         # @overload grubbs(xi, xk, a)
         #   @param [Array] xi xiのデータ(double[])
@@ -276,7 +300,7 @@ module Num4TstStatistic2Lib
         #   @return [double] 検定統計量
         # @example
         #   xi = [3.4, 3.5, 3.3, 2.2, 3.3, 3.4, 3.6, 3.2]
-        #   outlier = Num4TstStatisticLib::OutlierLib.new
+        #   outlier = Num4TstStatistic2Lib::OutlierLib.new
         #   outlier.grubbs(xi, 2.2, 0.05)
         #   => true
         def grubbs(xi, xk, a)
@@ -292,7 +316,7 @@ module Num4TstStatistic2Lib
         #   @return [void]  errbar.jpegファイルを出力
         # @example
         #   xi = [3.4, 3.5, 3.3, 2.2, 3.3, 3.4, 3.6, 3.2]
-        #   outlier = Num4TstStatisticLib::OutlierLib.new
+        #   outlier = Num4TstStatistic2Lib::OutlierLib.new
         #   outlier.grubbs("LDH", xi)
         #   => errbar.jpeg
         def errbar(dname, xi)
@@ -307,7 +331,6 @@ module Num4TstStatistic2Lib
             @hypothTest = Num4HypothTestLib::DecorrTestLib.new
         end
         # ピアソン相関係数
-        #  (相関係数の検定)
         #
         # @overload pearsoCorrelation(x, y, a)
         #   @param [Array] x xのデータ(double[])
