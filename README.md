@@ -4,6 +4,8 @@ num4tststatistic2
 
 ## decscription ##
 
+詳細は、https://siranovel.github.io/mydocs/num4tststatistic2 
+
 ## Demo ##
 
 ## VS. ##
