@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [0.1.1] - 2024-05-06
+
+### add
+- add function of diffPopulationMean2.
+- add CorreFact.
+
 ## [0.0.2] - 2024-04-22
 
 ### add
