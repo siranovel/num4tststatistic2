@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "integration module of num4tststatistic and num4hypothtst"
   s.authors     = ["siranovel"]
   s.email       = "siranovel@gmail.com"
-  s.homepage    = "http://github.com/siranovel/num4tststatistic2"
+  s.homepage    = "https://github.com/siranovel/num4tststatistic2"
   s.license     = "MIT"
   s.files       = ["LICENSE", "Gemfile", "CHANGELOG.md"]
   s.files       += Dir.glob("{lib,ext}/**/*")
