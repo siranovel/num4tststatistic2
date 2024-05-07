@@ -1,8 +1,10 @@
 require 'num4tststatistic'
 require 'hypothTest3'
+require_relative('decorrtest')
 
 # 統計的仮説検定
 module Num4TstStatistic2Lib
+    # パラメトリック検定
     class ParametrixTestLib
         def initialize(hypothTest3)
             @hypothTest3 = hypothTest3
@@ -67,6 +69,28 @@ module Num4TstStatistic2Lib
 
             statistic = @paraTest.populationRatio(m, n, p0)
             return @hypothTest3.normDistTest(statistic, a)
+        end
+        # 2つの母平均の差の検定
+        #
+        # @overload diffPopulationMean2(xi1, xi2, a)
+        #   @param [Array] xi1 x1のデータ(double[])
+        #   @param [Array] xi2 x2のデータ(double[])
+        #   @param  [double] a  有意水準
+        #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
+        # @example
+        #   xi1 = [165, 130, 182, 178, 194, 206, 160, 122, 212, 165, 247, 195]
+        #   xi2 = [180, 180, 235, 270, 240, 285, 164, 152]
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
+        #   paraTest = Num4TstStatistic2Lib::ParametrixTestLib.new(hypothTest)
+        #   paraTest.diffPopulationMean2(xi1, xi2, 0.05)
+        #   => false
+        def diffPopulationMean2(xi1, xi2, a)
+            bRet = diffPopulationVar(xi1, xi2, a)
+            if bRet == true # 等分散ではない
+                return diffPopulationMean2UnEquVar(xi1, xi2, a)
+            else            # 等分散性
+                return diffPopulationMean2EquVar(xi1, xi2, a)
+            end
         end
         # 2つの母平均の差の検定(等分散性を仮定)
         #
@@ -222,6 +246,7 @@ module Num4TstStatistic2Lib
             return @hypothTest3.chi2DistTest(statistic, df, a)
         end
     end
+    # ノンパラメトリック検定
     class NonParametrixTestLib
         def initialize(hypothTest3)
             @hypothTest3 = hypothTest3
@@ -287,6 +312,7 @@ module Num4TstStatistic2Lib
             return @nonParaTest.ks2test(xi1, xi2, a)
         end
     end
+    # 外れ値検定
     class OutlierLib
         def initialize
             @outlier = Num4TstStatisticLib::OutlierLib.new
@@ -323,8 +349,11 @@ module Num4TstStatistic2Lib
             @outlier.errbar(dname, xi)
         end
     end
+end
+# 相関検定
+module DecorrTestLib
     # 無相関の検定
-    class DecorrTestLib
+    class UnDecorrTestLib < DecorrTestIF
         def initialize
             @paraTest = Num4TstStatisticLib::ParametrixTestLib.new
             @nonParaTest = Num4TstStatisticLib::NonParametrixTestLib.new
@@ -340,8 +369,8 @@ module Num4TstStatistic2Lib
         # @example
         #   x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
         #   y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
-        #   paraTest = Num4TstStatistic2Lib::DecorrTestLib.new
-        #   paraTest.pearsoCorrelation(x, y, 0.05)
+        #   decorrTest = DecorrTestLib::UnDecorrTestLib.new
+        #   decorrTest.pearsoCorrelation(x, y, 0.05)
         #   => true
         def pearsoCorrelation(x, y, a)
             df = x.size - 2
@@ -358,8 +387,8 @@ module Num4TstStatistic2Lib
         # @example
         #   x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
         #   y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
-        #   paraTest = Num4TstStatistic2Lib::DecorrTestLib.new
-        #   paraTest.spearmanscorr(x, y, 0.05)
+        #   decorrTest = DecorrTestLib::UnDecorrTestLib.new
+        #   decorrTest.spearmanscorr(x, y, 0.05)
         #   => true
         def spearmanscorr(x, y, a)
             df = x.size - 2
@@ -376,8 +405,8 @@ module Num4TstStatistic2Lib
         # @example
         #   x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
         #   y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
-        #   paraTest = Num4TstStatistic2Lib::DecorrTestLib.new
-        #   paraTest.kendallscorr(x, y, 0.05)
+        #   decorrTest = DecorrTestLib::UnDecorrTestLib.new
+        #   decorrTest.kendallscorr(x, y, 0.05)
         #   => false
         def kendallscorr(x, y, a)
             df = x.size - 2
@@ -385,5 +414,72 @@ module Num4TstStatistic2Lib
             return @hypothTest.twoSideTest(statistic, df, a)
         end
     end
+    # 相関係数の検定
+    class CorreFactLib < CorreFactIF
+        def initialize(hypothTest3)
+            @hypothTest3 = hypothTest3
+            @paraTest = Num4TstStatisticLib::ParametrixTestLib.new
+            @nonParaTest = Num4TstStatisticLib::NonParametrixTestLib.new
+        end
+        # ピアソン相関係数
+        #
+        # @overload pearsoCorrelation(x, y, rth0, a)
+        #   @param [Array] x xのデータ(double[])
+        #   @param [Array] y yのデータ(double[])
+        #   @param [double] rth0 母相関係数
+        #   @param  [double] a  有意水準
+        #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
+        # @example
+        #   x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
+        #   y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
+        #   decorrTest = DecorrTestLib::CorreFactLib.new(hypothTest)
+        #   decorrTest.pearsoCorrelation(x, y,  -0.3, 0.05)
+        #   => true
+        def pearsoCorrelation(x, y, rth0, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+            statistic = @paraTest.pearsoCorrelation(x, y)
+            return @hypothTest3.populationCorre(statistic, x.size, rth0, a)
+        end
+        # スピアマンの順位相関係数
+        #
+        # @overload spearmanscorr(x, y, rth0, a)
+        #   @param [Array] x xのデータ(double[])
+        #   @param [Array] y yのデータ(double[])
+        #   @param [double] rth0 母相関係数
+        #   @param  [double] a  有意水準
+        #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
+        # @example
+        #   x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
+        #   y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
+        #   decorrTest = DecorrTestLib::CorreFactLib.new(hypothTest)
+        #   decorrTest.spearmanscorr(x, y, -0.3, 0.05)
+        #   => true
+        def spearmanscorr(x, y, rth0, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+            statistic = @nonParaTest.spearmanscorr(x, y)
+            return @hypothTest3.populationCorre(statistic, x.size, rth0, a)
+        end
+        # ケンドールの順位相関係数
+        #
+        # @overload kendallscorr(x, y, rth0, a)
+        #   @param [Array] x xのデータ(double[])
+        #   @param [Array] y yのデータ(double[])
+        #   @param [double] rth0 母相関係数
+        #   @param  [double] a  有意水準
+        #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
+        # @example
+        #   x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
+        #   y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
+        #   decorrTest = DecorrTestLib::CorreFactLib.new(hypothTest)
+        #   decorrTest.kendallscorr(x, y, -0.3, 0.05)
+        #   => true
+        def kendallscorr(x, y, rth0, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+            statistic = @nonParaTest.kendallscorr(x, y)
+            return @hypothTest3.populationCorre(statistic, x.size, rth0, a)
+        end
+    end
 end
-
