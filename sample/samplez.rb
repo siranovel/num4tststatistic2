@@ -1,4 +1,5 @@
 require 'num4tststatistic2'
+require 'corrtest'
 require 'num4hypothtst'
 require_relative('mymatcher')
 
@@ -30,11 +31,11 @@ RSpec.describe Num4TstStatistic2Lib do
                 paraTestL.populationRatio(29, 346, 0.12, a)
             ).to eq true
         end
-        it '#diffPopulationMean2' do
+        it '#diffPopulationVarMean' do
             xi1 = [165, 130, 182, 178, 194, 206, 160, 122, 212, 165, 247, 195]
             xi2 = [180, 180, 235, 270, 240, 285, 164, 152]
             expect(
-                paraTest2.diffPopulationMean2(xi1, xi2, a)
+                paraTest2.diffPopulationVarMean(xi1, xi2, a)
             ).to eq false
         end
         it '#diffPopulationMean2EquVar' do
@@ -128,56 +129,56 @@ RSpec.describe Num4TstStatistic2Lib do
         end
     end
 end
-RSpec.describe DecorrTestLib do
+RSpec.describe CorrTestLib do
     let!(:a) { 0.05 }
     let!(:rth0) { -0.3 }
-    describe DecorrTestLib::UnDecorrTestLib do
-        let(:decorrTest) { DecorrTestLib::UnDecorrTestLib.new }
+    describe CorrTestLib::DecorrTestLib do
+        let(:corrTest) { CorrTestLib::DecorrTestLib.new }
         
         it '#pearsoCorrelation' do
             x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
             y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
             expect(
-                decorrTest.pearsoCorrelation(x, y, a)
+                corrTest.pearsoCorrelation(x, y, a)
             ).to eq true
         end
         it '#spearmanscorr' do
             x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
             y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
             expect(
-                decorrTest.spearmanscorr(x, y, a)
+                corrTest.spearmanscorr(x, y, a)
             ).to eq true
         end
         it '#kendallscorr' do
             x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
             y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
             expect(
-                decorrTest.kendallscorr(x, y, a)
+                corrTest.kendallscorr(x, y, a)
             ).to eq false
         end
     end
-    describe DecorrTestLib::CorreFactLib do
+    describe CorrTestLib::CorreFactLib do
         let!(:hypothTest2) { Num4HypothTestLib::TwoSideTestLib.new }
-        let(:decorrTest) { DecorrTestLib::CorreFactLib.new(hypothTest2) }
+        let(:corrTest) { CorrTestLib::CorreFactLib.new(hypothTest2) }
         it '#pearsoCorrelation' do
             x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
             y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
             expect(
-                decorrTest.pearsoCorrelation(x, y, rth0, a)
+                corrTest.pearsoCorrelation(x, y, rth0, a)
             ).to eq true
         end
         it '#spearmanscorr' do
             x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
             y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
             expect(
-                decorrTest.spearmanscorr(x, y, rth0, a)
+                corrTest.spearmanscorr(x, y, rth0, a)
             ).to eq true
         end
         it '#kendallscorr' do
             x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
             y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
             expect(
-                decorrTest.kendallscorr(x, y, rth0, a)
+                corrTest.kendallscorr(x, y, rth0, a)
             ).to eq true
         end
     end
