@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## [0.1.2] - 2024-05-08
+
+### chg
+- change function name from diffPopulationMean2 to diffPopulationVarMean
+
 ## [0.1.1] - 2024-05-06
 
 ### add
