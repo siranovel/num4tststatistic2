@@ -69,7 +69,7 @@ module Num4TstStatistic2Lib
             statistic = @paraTest.populationRatio(m, n, p0)
             return @hypothTest3.normDistTest(statistic, a)
         end
-        # 2つの母平均の差の検定
+        # 2つの母平均の差の検定(等分散性check有り)
         #
         # @overload diffPopulationVarMean(xi1, xi2, a)
         #   @param [Array] xi1 x1のデータ(double[])
@@ -152,6 +152,7 @@ module Num4TstStatistic2Lib
         #   => true
         def diffPopulationMean(xi1, xi2, a)
             raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+            raise RangeError unless xi1.size == xi2.size
 
             n = xi1.size
             df = n - 1
