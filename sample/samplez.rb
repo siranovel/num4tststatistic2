@@ -1,5 +1,5 @@
 require 'num4tststatistic2'
-require 'corrtest'
+require 'num4corrtest'
 require 'num4hypothtst'
 require_relative('mymatcher')
 
@@ -58,6 +58,13 @@ RSpec.describe Num4TstStatistic2Lib do
             expect(
                 paraTestR.diffPopulationMean(xi1, xi2, a)
             ).to eq true
+        end
+        it '#diffPopulationMean raise' do
+            xi1 = [165, 130, 182, 178, 194, 206, 160, 122, 212, 165, 247, 195]
+            xi2 = [180, 180, 235, 270, 240, 285, 164, 152]
+            expect{
+                paraTestR.diffPopulationMean(xi1, xi2, a)
+            }.to raise_error RangeError
         end
         it '#diffPopulationVar' do
             xi1 = [165, 130, 182, 178, 194, 206, 160, 122, 212, 165, 247, 195]
@@ -129,11 +136,11 @@ RSpec.describe Num4TstStatistic2Lib do
         end
     end
 end
-RSpec.describe CorrTestLib do
+RSpec.describe Num4CorrTestLib do
     let!(:a) { 0.05 }
     let!(:rth0) { -0.3 }
-    describe CorrTestLib::DecorrTestLib do
-        let(:corrTest) { CorrTestLib::DecorrTestLib.new }
+    describe Num4CorrTestLib::DecorrTestLib do
+        let(:corrTest) { Num4CorrTestLib::DecorrTestLib.new }
         
         it '#pearsoCorrelation' do
             x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
@@ -151,15 +158,15 @@ RSpec.describe CorrTestLib do
         end
         it '#kendallscorr' do
             x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
-            y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
+            y = [31,  5, 2, 17, 18, 2, 9, 25, 13]
             expect(
                 corrTest.kendallscorr(x, y, a)
             ).to eq false
         end
     end
-    describe CorrTestLib::CorreFactLib do
+    describe Num4CorrTestLib::CorreFactLib do
         let!(:hypothTest2) { Num4HypothTestLib::TwoSideTestLib.new }
-        let(:corrTest) { CorrTestLib::CorreFactLib.new(hypothTest2) }
+        let(:corrTest) { Num4CorrTestLib::CorreFactLib.new(hypothTest2) }
         it '#pearsoCorrelation' do
             x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
             y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
@@ -176,7 +183,7 @@ RSpec.describe CorrTestLib do
         end
         it '#kendallscorr' do
             x = [113, 64, 16, 45, 28, 19, 30, 82, 76]
-            y = [31, 5, 2, 17, 18, 2, 9, 25, 13]
+            y = [31,  5,   2, 17, 18, 2,  9,  25, 13]
             expect(
                 corrTest.kendallscorr(x, y, rth0, a)
             ).to eq true
