@@ -2,7 +2,7 @@ require 'num4tststatistic'
 require 'hypothTest3'
 
 # 相関検定
-module CorrTestLib
+module Num4CorrTestLib
     # 無相関の検定
     class DecorrTestLib
         def initialize
