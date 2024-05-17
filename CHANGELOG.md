@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [0.2.1] - 2024-05-15
+### change
+- change module name to Num4CorrTestLib from CorrTestLib.
+
 ## [0.1.2] - 2024-05-08
 
 ### chg
