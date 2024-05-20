@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'num4tststatistic2'
-  s.version     = '0.2.1'
-  s.date        = '2024-05-15'
+  s.version     = '0.2.2'
+  s.date        = '2024-05-20'
   s.summary     = "statistical hypothesis verification!"
   s.description = "integration module of num4tststatistic and num4hypothtst"
   s.authors     = ["siranovel"]
