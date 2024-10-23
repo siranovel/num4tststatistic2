@@ -22,7 +22,8 @@ jobs:
       run: |
         gem build *.gemspec
         gem install num4tststatistic2
-        rspec sample/samplez.rb
+        cd sample
+        rake -f tststatistic2.rk spec
   deploy:
     name: Publish
     runs-on: ubuntu-latest
