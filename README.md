@@ -11,12 +11,12 @@ num4tststatistic2
 ## VS. ##
 
 ## Requirement ##
-num4tststatisticライブラリ  
+num4tststatisticライブラリ
 num4hypothtstライブラリ
 
 ## Usage ##
 
-sample/samplez.rbファイルを参照
+sample/spec内の各ファイル参照
 
 ## install ##
 
