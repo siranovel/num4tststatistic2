@@ -25,12 +25,19 @@ From rubygems:
     [sudo] gem install num4tststatistic2
 ~~~
 
+Install via Gemfile:  
+~~~
+source "https://rubygems.pkg.github.com/siranovel" do
+    gem "num4tststatistic2"
+end
+~~~
+
 or from the git repository on github:  
 ~~~
     git clone https://github.com/siranovel/num4tststatistic2.git  
     cd num4tststatistic2  
-    gem build *.gemspec
-    gem install *.gem
+    gem build num4tststatistic2.gemspec
+    gem install num4tststatistic2
 ~~~
 
 ## Contribution ##
