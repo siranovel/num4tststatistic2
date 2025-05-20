@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## [0.3.1] - 2025-05-15
+### add
+- add required_ruby_version in gemspec file.
+
+## [0.2.2] - 2024-05-20
+### change
+- change to add_dependency from add_development_dependency
+
 ## [0.2.1] - 2024-05-15
 ### change
 - change module name to Num4CorrTestLib from CorrTestLib.
