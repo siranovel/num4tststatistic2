@@ -23,9 +23,9 @@ jobs:
       with:
         ruby-version: jruby
     - run: bundle install
-    - run: gem install rspec
       env:
         BUNDLE_RUBYGEMS__PKG__GITHUB__COM: ${{ secrets.GITHUB_TOKEN }}
+    - run: gem install rspec
     - name: test
       run: |
         gem build *.gemspec
