@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-platfroms :jruby do
+group :development do
     gem "rake-compiler"
 end
 
