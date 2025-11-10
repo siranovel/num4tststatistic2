@@ -131,7 +131,92 @@ module Num4CorrTestLib
             return @hypothTest3.populationCorre(statistic, x.size, rth0, a)
         end
     end
-
+    # 差の母相関係数の検定
+    class DiffCorreFactLib
+        def initialize(hypothTest3)
+            @hypothTest3 = hypothTest3
+            @corr = CorrStatisticLib.new
+        end
+        # ピアソン相関係数
+        #
+        # @overload pearsoCorrelation(xy1, xy2, a)
+        #   @param [Array] xy1 xy1のデータ(double[][])
+        #   @param [Array] xy2 xy2のデータ(double[][])
+        #   @param  [double] a  有意水準
+        #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
+        # @example
+        #   xy1 = [
+        #           [113, 64, 16, 45, 28, 19, 30, 82, 76],
+        #           [31, 5, 2, 17, 18, 2, 9, 25, 13]
+        #         ]
+        #   xy2 = [
+        #           [113, 64, 16, 45, 28, 19, 30, 82, 76],
+        #           [31, 5, 2, 17, 18, 2, 9, 25, 13]
+        #         ]
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
+        #   corrTest = CorrTestLib::DiffCorreFactLib.new(hypothTest)
+        #   corrTest.pearsoCorrelation(xy1, xy2, 0.05)
+        #   => false
+        def pearsoCorrelation(xy1, xy2, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+            statistic1 = @corr.pearsoCorrelation(xy1[0], xy1[1])
+            statistic2 = @corr.pearsoCorrelation(xy2[0], xy2[1])
+            return @hypothTest3.diffPopulationCorre(statistic1, xy1[0].size, statistic2, xy2[0].size, a)
+        end
+        # スピアマンの順位相関係数
+        #
+        # @overload spearmanscorr(xy1, xy2, a)
+        #   @param [Array] xy1 xy1のデータ(double[][])
+        #   @param [Array] xy2 xy2のデータ(double[][])
+        #   @param  [double] a  有意水準
+        #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
+        # @example
+        #   xy1 = [
+        #           [113, 64, 16, 45, 28, 19, 30, 82, 76],
+        #           [31, 5, 2, 17, 18, 2, 9, 25, 13]
+        #         ]
+        #   xy2 = [
+        #           [113, 64, 16, 45, 28, 19, 30, 82, 76],
+        #           [31, 5, 2, 17, 18, 2, 9, 25, 13]
+        #         ]
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
+        #   corrTest = CorrTestLib::DiffCorreFactLib.new(hypothTest)
+        #   corrTest.spearmanscorr(xy1, xy2, 0.05)
+        #   => false
+        def spearmanscorr(xy1, xy2, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+            statistic1 = @corr.spearmanscorr(xy1[0], xy1[1])
+            statistic2 = @corr.spearmanscorr(xy2[0], xy2[1])
+            return @hypothTest3.diffPopulationCorre(statistic1, xy1[0].size, statistic2, xy2[0].size, a)
+        end
+        # ケンドールの順位相関係数
+        #
+        # @overload kendallscorr(xy1, xy2, a)
+        #   @param [Array] xy1 xy1のデータ(double[][])
+        #   @param [Array] xy2 xy2のデータ(double[][])
+        #   @param  [double] a  有意水準
+        #   @return [boolean] 検定結果(true:棄却域内 false:棄却域外)
+        # @example
+        #   xy1 = [
+        #           [113, 64, 16, 45, 28, 19, 30, 82, 76],
+        #           [31, 5, 2, 17, 18, 2, 9, 25, 13]
+        #         ]
+        #   xy2 = [
+        #           [113, 64, 16, 45, 28, 19, 30, 82, 76],
+        #           [31, 5, 2, 17, 18, 2, 9, 25, 13]
+        #         ]
+        #   hypothTest = Num4HypothTestLib::TwoSideTestLib.new
+        #   corrTest = CorrTestLib::DiffCorreFactLib.new(hypothTest)
+        #   corrTest.kendallscorr(xy1, xy2, 0.05)
+        #   => false
+        def kendallscorr(xy1, xy2, a)
+            raise TypeError unless @hypothTest3.kind_of?(HypothTest3IF)
+            statistic1 = @corr.kendallscorr(xy1[0], xy1[1])
+            statistic2 = @corr.kendallscorr(xy2[0], xy2[1])
+            return @hypothTest3.diffPopulationCorre(statistic1, xy1[0].size, statistic2, xy2[0].size, a)
+        end
+    end
+    # 相関係数を計算
     class CorrStatisticLib
         def initialize
             @paraTest = Num4TstStatisticLib::ParametrixTestLib.new
