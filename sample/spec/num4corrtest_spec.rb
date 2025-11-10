@@ -54,5 +54,48 @@ RSpec.describe Num4CorrTestLib do
             ).to eq true
         end
     end
+    describe Num4CorrTestLib::DiffCorreFactLib do
+        let!(:hypothTest2) { Num4HypothTestLib::TwoSideTestLib.new }
+        let(:corrTest) { Num4CorrTestLib::DiffCorreFactLib.new(hypothTest2) }
+        it '#pearsoCorrelation' do
+            xy1 = [
+                    [113, 64, 16, 45, 28, 19, 30, 82, 76],
+                    [31, 5, 2, 17, 18, 2, 9, 25, 13]
+                  ]
+            xy2 = [
+                    [113, 64, 16, 45, 28, 19, 30, 82, 76],
+                    [31, 5, 2, 17, 18, 2, 9, 25, 13]
+                  ]
+            expect(
+                corrTest.pearsoCorrelation(xy1, xy2, a)
+            ).to eq false
+        end
+        it '#spearmanscorr' do
+            xy1 = [
+                    [113, 64, 16, 45, 28, 19, 30, 82, 76],
+                    [31, 5, 2, 17, 18, 2, 9, 25, 13]
+                  ]
+            xy2 = [
+                    [113, 64, 16, 45, 28, 19, 30, 82, 76],
+                    [31, 5, 2, 17, 18, 2, 9, 25, 13]
+                  ]
+            expect(
+                corrTest.spearmanscorr(xy1, xy2, a)
+            ).to eq false
+        end
+        it '#kendallscorr' do
+            xy1 = [
+                    [113, 64, 16, 45, 28, 19, 30, 82, 76],
+                    [31, 5, 2, 17, 18, 2, 9, 25, 13]
+                  ]
+            xy2 = [
+                    [113, 64, 16, 45, 28, 19, 30, 82, 76],
+                    [31, 5, 2, 17, 18, 2, 9, 25, 13]
+                  ]
+            expect(
+                corrTest.kendallscorr(xy1, xy2, a)
+            ).to eq false
+        end
+    end
 end
 
