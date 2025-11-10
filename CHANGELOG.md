@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## [0.3.2] - 2025-11-08
+### add
+- add DiffCorreFactLib.
+
 ## [0.3.1] - 2025-05-15
 ### add
 - add required_ruby_version in gemspec file.
