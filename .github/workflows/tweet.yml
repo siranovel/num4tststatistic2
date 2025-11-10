@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run github action using docker
-        uses: ethomson/send-sweet-action@v1
+        uses: ethomson/send-tweet-action@v1
         with:
           status: "New commit pushd! (${{ github.repostory }})"
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
